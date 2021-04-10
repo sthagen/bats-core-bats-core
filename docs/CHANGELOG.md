@@ -10,12 +10,23 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+* added checks and improved documentation for `$BATS_TMPDIR` (#410)
+* the docker container now uses [tini](https://github.com/krallin/tini) as the container entrypoint to
+  improve signal forwarding (#407)
+
+#### Documentation
+
+* added tutorial for new users (#397)
+
 ### Fixed
 
 * fix `bats_tap_stream_unknown: command not found` with pretty formatter, when
   writing non compliant extended output (#412)
 * avoid collisions on `$BATS_RUN_TMPDIR` with `--no-tempdir-cleanup` and docker
   by using `mktemp` additionally to PID (#409)
+* pretty printer now puts text that is printed to FD 3 below the test name (#426)
 
 ## [1.3.0] - 2021-03-08
 
