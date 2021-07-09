@@ -13,12 +13,18 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 ### Added
 
 * added checks and improved documentation for `$BATS_TMPDIR` (#410)
-* the docker container now uses [tini](https://github.com/krallin/tini) as the container entrypoint to
-  improve signal forwarding (#407)
+* the docker container now uses [tini](https://github.com/krallin/tini) as the
+  container entrypoint to improve signal forwarding (#407)
+* script to uninstall bats from a given prefix (#400)
+* replace preprocessed file path (e.g. `/tmp/bats-run-22908-NP0f9h/bats.23102.src`)
+  with original filename in stdout/err (but not FD3!) (#429)
+* print aborted command on SIGINT/CTRL+C (#368)
 
 #### Documentation
 
 * added tutorial for new users (#397)
+* updated copyright year (#445)
+* fixed example invocation of docker container (#440)
 
 ### Fixed
 
@@ -29,6 +35,11 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * pretty printer now puts text that is printed to FD 3 below the test name (#426)
 * `rm semaphores/slot-: No such file or directory` in parallel mode on MacOS
   (#434, #433)
+* fix YAML blocks in TAP13 formatter using `...` instead of `---` to start
+  a block (#442)
+* fixed some typos in comments (#447)
+* ensure `/code` exists in docker container, to make examples work again  (#440)
+* also display error messages from free code (#429)
 
 ## [1.3.0] - 2021-03-08
 

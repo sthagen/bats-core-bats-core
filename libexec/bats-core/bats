@@ -109,8 +109,8 @@ set -- "${arguments[@]}"
 arguments=()
 
 unset flags recursive formatter_flags
-flags=('--dummy-flag') # add a dummy flag to prevent unset varialeb errors on empty array expansion in old bash versions
-formatter_flags=('--dummy-flag') # add a dummy flag to prevent unset varialeb errors on empty array expansion in old bash versions
+flags=('--dummy-flag') # add a dummy flag to prevent unset variable errors on empty array expansion in old bash versions
+formatter_flags=('--dummy-flag') # add a dummy flag to prevent unset variable errors on empty array expansion in old bash versions
 formatter='tap'
 report_formatter=''
 recursive=
@@ -239,6 +239,10 @@ if [[ "$report_formatter" == "junit" ]]; then
   report_formatter_flags+=('--base-path' "${arguments[0]}")
 fi
 
+if [[ "$formatter" == "pretty" ]]; then
+  formatter_flags+=('--base-path' "${arguments[0]}")
+fi
+
 # if we don't need to filter extended syntax, use the faster formatter
 if [[ "$formatter" == tap && -z "$report_formatter" ]]; then
   formatter="cat"
@@ -296,6 +300,8 @@ done
 
 # shellcheck source=lib/bats-core/validator.bash
 source "$BATS_ROOT/lib/bats-core/validator.bash"
+
+trap 'BATS_INTERRUPTED=true' INT # let the lower levels handle the interruption
 
 set -o pipefail execfail
 
