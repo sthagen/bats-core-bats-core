@@ -553,13 +553,17 @@ END_OF_ERR_MSG
   printf 'num lines: %d\n' "${#lines[@]}" >&2
   printf 'LINE: %s\n' "${lines[@]}" >&2
   [ "$status" -eq 1 ]
-  [ "${#lines[@]}" -eq 7 ]
-  [ "${lines[1]}" = 'not ok 1 no final newline' ]
-  [ "${lines[2]}" = "# (in test file $RELATIVE_FIXTURE_ROOT/no-final-newline.bats, line 2)" ]
-  [ "${lines[3]}" = "#   \`printf 'foo\nbar\nbaz' >&2 && return 1' failed" ]
+  [ "${#lines[@]}" -eq 11 ]
+  [ "${lines[1]}" = 'not ok 1 error in test' ]
+  [ "${lines[2]}" = "# (in test file $RELATIVE_FIXTURE_ROOT/no-final-newline.bats, line 3)" ]
+  [ "${lines[3]}" = "#   \`false' failed" ]
   [ "${lines[4]}" = '# foo' ]
   [ "${lines[5]}" = '# bar' ]
-  [ "${lines[6]}" = '# baz' ]
+  [ "${lines[6]}" = 'not ok 2 test function returns nonzero' ]
+  [ "${lines[7]}" = "# (in test file $RELATIVE_FIXTURE_ROOT/no-final-newline.bats, line 7)" ]
+  [ "${lines[8]}" = "#   \`printf 'foo\nbar'' failed" ]
+  [ "${lines[9]}" = '# foo' ]
+  [ "${lines[10]}" = '# bar' ]
 }
 
 @test "run tests which consume stdin (see #197)" {
@@ -805,6 +809,7 @@ EOF
 
 @test "Parallel mode works on MacOS with over subscription (issue #433)" {
   type -p parallel &>/dev/null || skip "--jobs requires GNU parallel"
+  (type -p flock &>/dev/null || type -p shlock &>/dev/null) || skip "--jobs requires flock/shlock"
   run bats -j 2 "$FIXTURE_ROOT/issue-433"
 
   [ "$status" -eq 0 ]
@@ -1121,4 +1126,20 @@ EOF
   [ "$OUTPUT" == "" ]
 
   [ "$(find "$OUTPUT_DIR" -type f | wc -l)" -eq 3 ]
+}
+
+@test "Tell about missing flock and shlock" {
+  if ! command -v parallel; then
+    skip "this test requires GNU parallel to be installed"
+  fi
+  if command -v flock; then
+    skip "this test requires flock not to be installed"
+  fi
+  if command -v shlock; then
+    skip "this test requires flock not to be installed"
+  fi
+
+  run ! bats --jobs 2 "$FIXTURE_ROOT/parallel.bats"
+  [ "${lines[0]}" == "ERROR: flock/shlock is required for parallelization within files!" ]
+  [ "${#lines[@]}" -eq 1 ]
 }
