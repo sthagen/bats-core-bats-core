@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 [kac]: https://keepachangelog.com/en/1.0.0/
 [semver]: https://semver.org/
 
-## [Unreleased]
+## [1.5.0] - 2021-10-22
 
 ### Added
 
@@ -20,13 +20,13 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
     failed tests
   * `--gather-test-outputs-in <directory>`: Gather the output of failing **and**
     passing tests as files in directory
-* Experimental: add return code checks to `run` via `!`/`=N` (#367)
+* Experimental: add return code checks to `run` via `!`/`-<N>` (#367, #507)
 * `install.sh` and `uninstall.sh` take an optional second parameter for the lib
   folder name to allow for multilib install, e.g. into lib64 (#452)
 * add `run` flag `--keep-empty-lines` to retain empty lines in `${lines[@]}` (#224,
   a894fbfa)
-* add `run` flag `--output merged|separate|stderr|stdout` (default: `merged`) to
-  select how `$output` and `$lines` are filled (#47, 5c9b173d)
+* add `run` flag `--separate-stderr` which also fills `$stderr` and
+  `$stderr_lines` (#47, 5c9b173d, #507)
 
 ### Fixed
 
@@ -38,7 +38,9 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * print final line without newline on Bash 3.2 for midtest (ERREXIT) failures
   too (#495, #145)
 * abort with error on missing flock/shlock when running in parallel mode  (#496)
-* improved `set -u` test and fixed some unset variable accesses (#498)
+* improved `set -u` test and fixed some unset variable accesses (#498, #501)
+* shorten suite/file/test temporary folder paths to leave enough space even on
+  restricted systems (#503)
 
 #### Documentation
 
