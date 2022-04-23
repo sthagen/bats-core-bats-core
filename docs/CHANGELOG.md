@@ -10,6 +10,23 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+* Pretty formatter print filename when entering file (#561)
+* BATS_TEST_NAME_PREFIX allows prefixing test names on stdout and in reports (#561)
+
+#### Documentation
+
+* document `$BATS_VERSION` (#557)
+
+### Fixed
+
+* unbound variable errors in formatters when using `SHELLOPTS=nounset` (`-u`) (#558)
+* don't require `flock` *and* `shlock` for parallel mode test (#554)
+* print name of failing test when using TAP13 with timing information (#559, #555)
+* removed broken symlink, added regression test (#560)
+* don't show empty lines as `#` with pretty formatter  (#561)
+
 ## [1.6.0] - 2022-02-24
 
 ### Added

@@ -342,6 +342,8 @@ There are several global variables you can use to introspect on Bats tests:
 - `$BATS_TEST_DIRNAME` is the directory in which the Bats test file is located.
 - `$BATS_TEST_NAMES` is an array of function names for each test case.
 - `$BATS_TEST_NAME` is the name of the function containing the current test case.
+- `BATS_TEST_NAME_PREFIX` will be prepended to the description of each test on 
+   stdout and in reports.
 - `$BATS_TEST_DESCRIPTION` is the description of the current test case.
 - `$BATS_TEST_NUMBER` is the (1-based) index of the current test case in the test file.
 - `$BATS_SUITE_TEST_NUMBER` is the (1-based) index of the current test case in the test suite (over all files).
@@ -358,6 +360,7 @@ There are several global variables you can use to introspect on Bats tests:
   Could be used to create files required by multiple tests in the same test file.
 - `$BATS_TEST_TMPDIR` is a temporary directory unique for each test.
   Could be used to create files required only for specific tests.
+- `$BATS_VERSION` is the version of Bats running the test.
 
 ## Libraries and Add-ons
 
