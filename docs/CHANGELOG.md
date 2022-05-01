@@ -27,6 +27,11 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * removed broken symlink, added regression test (#560)
 * don't show empty lines as `#` with pretty formatter  (#561)
 
+#### Documentation
+
+* remove 2018 in title, update copyright dates in README.md (#567)
+* fix broken links (#568)
+
 ## [1.6.0] - 2022-02-24
 
 ### Added
