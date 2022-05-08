@@ -27,6 +27,9 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * print name of failing test when using TAP13 with timing information (#559, #555)
 * removed broken symlink, added regression test (#560)
 * don't show empty lines as `#` with pretty formatter  (#561)
+* prevent `teardown`, `teardown_file`, and `teardown_suite` from overriding bats'
+  exit code by setting `$status` (e.g. via calling `run`) (#581, #575)
+* `run --keep-empty-lines` now reports 0 lines on empty `$output` (#583)
 
 #### Documentation
 
