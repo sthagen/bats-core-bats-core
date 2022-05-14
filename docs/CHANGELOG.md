@@ -8,19 +8,23 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 [kac]: https://keepachangelog.com/en/1.0.0/
 [semver]: https://semver.org/
 
-## [Unreleased]
+## [1.7.0] - 2022-05-14
 
 ### Added
 
 * Pretty formatter print filename when entering file (#561)
 * BATS_TEST_NAME_PREFIX allows prefixing test names on stdout and in reports (#561)
 * setup_suite and teardown_suite (#571, #585)
-* out-of-band warning infrastructure and first warning BW01 
-  (run command not found) (#586)
+* out-of-band warning infrastructure, with following warnings:
+  * BW01: run command not found (exit code 127)  (#586)
+  * BW02: run uses flags without proper `bats_require_minimum_version` guard (#587)
+* `bats_require_minimum_version` to guard code that would not run on older
+  versions (#587)
 
 #### Documentation
 
 * document `$BATS_VERSION` (#557)
+* document new warning infrastructure (#589, #587, #586)
 
 ### Fixed
 
@@ -31,12 +35,18 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * don't show empty lines as `#` with pretty formatter  (#561)
 * prevent `teardown`, `teardown_file`, and `teardown_suite` from overriding bats'
   exit code by setting `$status` (e.g. via calling `run`) (#581, #575)
+  * **CRITICAL**: this can return exit code 0 despite failed tests, thus preventing
+    your CI from reporting test failures! The regression happened in version 1.6.0.
 * `run --keep-empty-lines` now reports 0 lines on empty `$output` (#583)
 
 #### Documentation
 
 * remove 2018 in title, update copyright dates in README.md (#567)
 * fix broken links (#568)
+* corrected invalid documentation of `run -N` (had `=N` instead) (#579)
+  * **CRITICAL**: using the incorrect form can lead to silent errors. See
+    [issue #578](https://github.com/bats-core/bats-core/issues/578) for more
+    details and how to find out if your tests are affected.
 
 ## [1.6.0] - 2022-02-24
 
