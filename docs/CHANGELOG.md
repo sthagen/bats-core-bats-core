@@ -18,6 +18,14 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
   versions >=1.5.0 (#593)
 * add documentation for `bats_require_minimum_version` (#595)
 
+### Fixed
+
+* added missing shebang  (#597)
+
+#### Documentation
+
+* typos (#596)
+
 ## [1.7.0] - 2022-05-14
 
 ### Added
@@ -53,6 +61,22 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 * remove 2018 in title, update copyright dates in README.md (#567)
 * fix broken links (#568)
+* corrected invalid documentation of `run -N` (had `=N` instead) (#579)
+  * **CRITICAL**: using the incorrect form can lead to silent errors. See
+    [issue #578](https://github.com/bats-core/bats-core/issues/578) for more
+    details and how to find out if your tests are affected.
+
+## [1.6.1] - 2022-05-14
+
+### Fixed
+
+* prevent `teardown`, `teardown_file`, and `teardown_suite` from overriding bats'
+  exit code by setting `$status` (e.g. via calling `run`) (#581, #575)
+  * **CRITICAL**: this can return exit code 0 despite failed tests, thus preventing
+    your CI from reporting test failures! The regression happened in version 1.6.0.
+
+#### Documentation
+
 * corrected invalid documentation of `run -N` (had `=N` instead) (#579)
   * **CRITICAL**: using the incorrect form can lead to silent errors. See
     [issue #578](https://github.com/bats-core/bats-core/issues/578) for more
