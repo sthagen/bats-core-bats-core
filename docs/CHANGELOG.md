@@ -20,6 +20,9 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * Docker tags `latest-no-faccessat2` and `<bats-version\>-no-faccessat2` for
   avoiding `bash: bats: No such file or directory` on `docker<20.10` (or
   `runc<v1.0.0-rc93`) (#622)
+* `BATS_TEST_TIMEOUT` variable to force a timeout on test (including `setup()`) (#491)
+* also print (nonempty) `$stderr` (from `run --separate-stderr`) with
+  `--print-output-on-failure` (#631)
 
 #### Documentation
 
@@ -43,6 +46,9 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * upgraded from deprecated CI envs for MacOS (10 -> 11,12) and Ubuntu
   (18.04 -> 22.04) (#630)
 * add `/usr/lib/bats` as default value for `BATS_LIB_PATH` (#628)
+* fix unset variable in `bats-formatter-junit` when `setup_file` fails (#632)
+* unify error behavior of `teardown`/`teardown_file`/`teardown_suite` functions:
+  only fail via return code, not via ERREXIT (#633)
 
 #### Documentation
 
