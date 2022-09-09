@@ -122,8 +122,7 @@ bats_load_library_safe() { # <slug>
 
   # Check for library load paths in BATS_TEST_DIRNAME and BATS_LIB_PATH
   if [[ ${slug:0:1} != / ]]; then
-    find_in_bats_lib_path library_path "$slug"
-    if [[ -z "$library_path" ]]; then
+    if ! find_in_bats_lib_path library_path "$slug"; then
       printf "Could not find library '%s' relative to test file or in BATS_LIB_PATH\n" "$slug" >&2
       return 1
     fi
@@ -150,7 +149,6 @@ bats_load_library() { # <slug>
 # load acts like bats_load_safe but exits the shell instead of returning 1.
 load() {
     if ! bats_load_safe "$@"; then
-      echo "${FUNCNAME[0]} $LINENO" >&3
         exit 1
     fi
 }
