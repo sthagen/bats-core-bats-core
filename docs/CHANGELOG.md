@@ -10,6 +10,11 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+* `shfmt` all files and enforce via CI (#651)
+* avoid kernel warning flood/hang with CTRL+C on Bash 5.2 RC (#656)
+
 ## [1.8.0] - 2022-09-15
 
 ### Added
@@ -27,14 +32,14 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
   `--print-output-on-failure` (#631)
 * `# bats test_tags=<tag list>`/`# bats file_tags=<tag list>` and
   `--filter-tags <tag list>` for tagging tests for execution filters (#642)
-* warning BW03: inform about `setup_file` in wrong file (`.bats` instead of `setup_suite.bash`) (#652)
+* warning BW03: inform about `setup_suite` in wrong file (`.bats` instead of `setup_suite.bash`) (#652)
 
 #### Documentation
 
 * update gotcha about negated statements: Recommend using `run !` on Bats
   versions >=1.5.0 (#593)
 * add documentation for `bats_require_minimum_version` (#595)
-* improve documentation about `setup_file` (#652)
+* improve documentation about `setup_suite` (#652)
 
 ### Fixed
 
@@ -59,7 +64,7 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * fix `load` not being available in `setup_suite` (#644)
 * fix RPM spec, add regression test (#648)
 * fix handling of `IFS` by `run` (#650)
-* only print `setup_file`'s stderr on errors (#649)
+* only print `setup_suite`'s stderr on errors (#649)
 
 #### Documentation
 
