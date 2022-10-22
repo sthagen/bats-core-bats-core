@@ -10,6 +10,18 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+* added installation instructions for Debian, Fedora, Gentoo, and OpenSUSE (#659)
+
+## [1.8.2] - 2022-10-19
+
+### Fixed
+
+* fix non zero return code on successful retried tests (#670)
+
+## [1.8.1] - 2022-10-19
+
 ### Fixed
 
 * `shfmt` all files and enforce via CI (#651)
