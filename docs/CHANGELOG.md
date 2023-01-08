@@ -18,6 +18,11 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
   * `colon`: `file.bats:1`
   * `uri`: `file:///path/to/file.bats:1`
   * `custom`: define your own formatter in `bats_format_file_line_reference_custom`
+* add `bats:focus` tag to run only focused tests (#679)
+
+### Documentation
+
+* add `--help` text and `man` page content for `--filter-tags` (#679)
 
 ### Fixed
 
@@ -32,6 +37,7 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 ### Fixed
 
 * fix non zero return code on successful retried tests (#670)
+* fix `skip` in `setup_file` failing test suite (#687)
 
 ## [1.8.1] - 2022-10-19
 
