@@ -667,6 +667,7 @@ END_OF_ERR_MSG
   [ "${lines[4]}" = "# /usr/local/bin:/usr/bin:/bin" ]
 }
 
+# bats test_tags=no-kcov
 @test "Test nounset does not trip up bats' internals (see #385)" {
   # don't export nounset within this file or we might trip up the testsuite itself,
   # getting bad diagnostics
@@ -1561,4 +1562,12 @@ enforce_own_process_group() {
   reentrant_run ! bats "$FIXTURE_ROOT/passing.bats" --report-formatter "$REPORT_FORMATTER" --output "$BATS_TEST_TMPDIR"
 
   [[ "${output}" = *"ERROR: command \`$REPORT_FORMATTER\` failed with status 11"* ]] || false
+}
+
+@test "Short opt unpacker rejects valued options" {
+  bats_require_minimum_version 1.5.0
+  reentrant_run ! bats "$FIXTURE_ROOT/passing.bats" -Fr tap
+  [[ "${output}" == *"Error: -F is not allowed within pack of flags."* ]] || false
+
+  reentrant_run -0 bats "$FIXTURE_ROOT/passing.bats" -rF tap
 }

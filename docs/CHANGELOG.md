@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * print tags on failing tests (#705)
 * test for negative arguments to `--jobs` (#693)
 * add tests for `--formatter cat` (#710)
+* test coverage in CI (#718)
 
 ### Documentation
 
@@ -26,10 +27,13 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * fix `run` with options overwriting the value of `i` (#726, #727)
 * fix `${BATS_TEST_NAMES[@]}` containing only `--tags` instead of test name since Bats v1.8.0 (#705)
 * fix `run --keep-empty-lines` counting trailing `\n` as (empty) new line (#711)
+* fix short flag unpacker creating bogus command lines with valued flags (#732)
+* fix formatter becoming confused with retries (#734)
 
 #### Documentation
 
 * typos, minor edits (#704)
+* simplified contributing.md (#718)
 
 ## [1.9.0] - 2023-02-12
 
