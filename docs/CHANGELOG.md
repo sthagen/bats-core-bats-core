@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 [kac]: https://keepachangelog.com/en/1.0.0/
 [semver]: https://semver.org/
 
-## [Unreleased]
+## [1.10.0] - 2023-07-15
 
 ### Added
 
@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * add tests for `--formatter cat` (#710)
 * test coverage in CI (#718)
 * Support for [rush](https://github.com/shenwei356/rush) as alternative to GNU parallel (#729)
+* add `bats_pipe` helper function for `run` that executes `\|` as pipes (#663)
+* publish docker images to ghcr.io (additionally to Dockerhub) (#740)
 
 ### Documentation
 
