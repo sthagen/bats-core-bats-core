@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 ### Added
 
+* make Dockerfile compatible with `#!/bin/bash` files (#967)
+
 #### Documentation
 
 * document `bats_pipe` function (#901)
@@ -21,10 +23,12 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 * unbreak test suites with multiple files loading common constants (#904), introduced in v1.11.0
 * docker image won't crash if a file or directory named 'bats' exists (#920)
+* use $BATS_LIBDIR instead of hardcoded lib in 'bats-gather-tests' (#985)
 
 ### Changed
 
 * update Docker image with the latest `bats-detik` version 1.3.1 (#932)
+* cleanup: remove unused `$BATS_FILTER` (#907)
 
 #### Documentation
 

@@ -126,7 +126,7 @@ jobs:
   macos:
     strategy:
       matrix:
-        os: ['macos-11', 'macos-12']
+        os: ['macos-12', 'macos-13']
         env_vars:
           - ''
           # allow for some parallelity without GNU parallel, since it is not installed by default
@@ -159,7 +159,7 @@ jobs:
   npm_on_macos:
     strategy:
       matrix:
-        os: ['macos-11', 'macos-12']
+        os: ['macos-12', 'macos-13']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -196,6 +196,21 @@ jobs:
           docker build --build-arg bashver="${{ matrix.version }}" --tag "bats/bats:bash-${{ matrix.version }}" .
           docker run -it "bash:${{ matrix.version }}" --version
           time docker run -it ${{ matrix.env_vars }} "bats/bats:bash-${{ matrix.version }}"  --print-output-on-failure --tap /opt/bats/test
+
+  lib64-install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Install in lib64
+        run: sudo ./install.sh /usr/ lib64
+      - name: Run from env
+        run: time bats test --print-output-on-failure --report-formatter junit --output test-results
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            test-results/**/*.xml
 
   alpine:
     runs-on: ubuntu-latest
