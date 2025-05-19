@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 ## [Unreleased]
 
+## [1.12.0] - 2025-05-18
+
 ### Added 
 
 * `bats::on_failure` hook that gets called when a test or `setup*` function fails (#1031)
