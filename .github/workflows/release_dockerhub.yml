@@ -20,17 +20,17 @@ jobs:
             TAG_VERSION=${GITHUB_REF#refs/tags/v} # refs/tags/v1.2.3 -> 1.2.3
             echo ::set-output name=version::$TAG_VERSION
         - name: Set up QEMU
-          uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
+          uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
 
 
         - name: Login to DockerHub
-          uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+          uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
           with:
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
 
         - name: Log in to the GitHub Container registry
-          uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
+          uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef
           with:
             registry: ghcr.io
             username: ${{ github.actor }}
