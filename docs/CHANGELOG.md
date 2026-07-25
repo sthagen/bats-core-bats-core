@@ -11,6 +11,12 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+* pretty formatter was not the default on interactive shells anymore (#1220)
+
+## [1.14.0] - 2026-07-21
+
 ### Added
 
 * `--errexit` flag to enable errexit (set -e) behavior for commands run in `run` (#1118)
@@ -21,7 +27,7 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * junit formatter:
   * avoid interference between env and internals (#1175)
   * remove control characters (\x00-\x08\x0B\x0C\x0E-\x1F) (#1176)
-  * don't report (skipped) last test as failed when `teardown_suite` generates FD3 output (#1181s)
+  * don't report (skipped) last test as failed when `teardown_suite` generates FD3 output (#1181)
   * fix(junit-formatter): skipped tests outputs reported as <system-err> (#1177)
 * fix failures with `--gather-test-outputs-in` when tests change directory (#1183)
 * `run` now honors `set -e` in your functions (#1118)
@@ -29,10 +35,12 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
     While it might constitute a breaking change for some, we decided the new behavior should be the default because it might uncover hidden errors.
     If you need the old behavior, you can use this wrapper function `suppress_errexit() { "$@" || return $?; }` like `run suppress_errexit <your command...>`
 * avoid overwriting `$_` by the DEBUG and ERR traps set by Bats (#1208)
+* fail with error when receiving empty string as testfile path (#1212)
 
 ### Changed
 
 * update the default version of the `bash` Docker image to 5.3 in `devcontainer` (#1184)
+* exit with error when no tests are found. Use `--allow-empty-suite` to revert to old behavior. (#1211)
 
 ### Documentation
 
@@ -58,7 +66,7 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 * renamed `docker-compose.yml` to `compose.yaml` (#1128)
 * `bats_test_function`: don't require `--tags` to be sorted (#1158)
 * fix `BATS_TEST_TIMEOUT` (#1160)
-  * not stopping processes under `run` 
+  * not stopping processes under `run`
   * prolonging skipped tests
 
 ### Documentation
@@ -671,4 +679,3 @@ Changes:
 [0.3.0]: https://github.com/bats-core/bats-core/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/bats-core/bats-core/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/bats-core/bats-core/commits/v0.1.0
-
