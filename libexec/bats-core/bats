@@ -36,6 +36,7 @@ HELP_TEXT_HEADER
 
   --abort                   Stop execution of suite on first failed test
   --allow-empty-suite       Exit with code 0 (instead of the default code 1) when no tests are found.
+                            Can also be set via $BATS_ALLOW_EMPTY_SUITE
   -c, --count               Count test cases without running any tests
   --code-quote-style <style>
                             A two character string of code quote delimiters

@@ -47,7 +47,7 @@ setup() {
   [ "${lines[0]}" = "1..0" ]
   [ "${#lines[@]}" -eq 1 ]
 
-  [ "${stderr_lines[0]}" = "ERROR: Found no tests. (Try \`--allow-empty-suite\`?)" ]
+  [ "${stderr_lines[0]}" = "ERROR: Found no tests. Use \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\` to suppress this error." ]
   [ "${#stderr_lines[@]}" -eq 1 ]
 }
 
@@ -527,6 +527,24 @@ END_OF_ERR_MSG
   [[ "${lines[1]}" == "ok 1 test 1" ]]
   [[ "${lines[2]}" == "ok 2 test 2 with	TAB in name" ]]
   [[ "${lines[3]}" == "ok 3 test 3" ]]
+}
+
+@test "test names with non-ASCII characters run under a UTF-8 locale (see #1233)" {
+  if ! locale -a 2>/dev/null | grep -qi '^en_US\.utf-\?8$'; then
+    skip "en_US.UTF-8 locale is not available on this system"
+  fi
+
+  # shellcheck disable=SC2030,SC2031
+  REENTRANT_RUN_PRESERVE+=(LC_ALL)
+  LC_ALL=en_US.UTF-8 reentrant_run --separate-stderr bats "$FIXTURE_ROOT/non_ascii_test_names.bats"
+  [ "$status" -eq 0 ]
+  [ "${lines[0]}" = "1..6" ]
+  # all 6 tests must actually run (none may be silently skipped/"ghosted"
+  # due to locale-dependent [[:alnum:]] matching in bats_encode_test_name)
+  local ok_count
+  ok_count="$(grep -c '^ok ' <<<"$output")"
+  [ "$ok_count" -eq 6 ]
+  [ -z "$stderr" ]
 }
 
 @test "report correct line on unset variables" {
@@ -1694,6 +1712,37 @@ END_OF_ERR_MSG
 @test "--allow-empty-suite fails when there are tests" {
   bats_require_minimum_version 1.5.0
   reentrant_run -0 bats --allow-empty-suite "$FIXTURE_ROOT/passing.bats"
+}
+
+@test "--allow-empty-suite exits successfully on empty suite" {
+  bats_require_minimum_version 1.5.0
+  reentrant_run --separate-stderr -0 bats --allow-empty-suite "$FIXTURE_ROOT/empty.bats"
+
+  [ "${lines[0]}" = "1..0" ]
+  [ "${#lines[@]}" -eq 1 ]
+  [ "${#stderr_lines[@]}" -eq 0 ]
+}
+
+@test "BATS_ALLOW_EMPTY_SUITE exits successfully on empty suite" {
+  bats_require_minimum_version 1.5.0
+  reentrant_run --separate-stderr -0 env BATS_ALLOW_EMPTY_SUITE=1 bats "$FIXTURE_ROOT/empty.bats"
+
+  [ "${lines[0]}" = "1..0" ]
+  [ "${#lines[@]}" -eq 1 ]
+  [ "${#stderr_lines[@]}" -eq 0 ]
+}
+
+@test "empty BATS_ALLOW_EMPTY_SUITE does not allow an empty suite" {
+  bats_require_minimum_version 1.5.0
+  reentrant_run --separate-stderr -1 env BATS_ALLOW_EMPTY_SUITE= bats "$FIXTURE_ROOT/empty.bats"
+
+  [ "${lines[0]}" = "1..0" ]
+  [ "${stderr_lines[0]}" = "ERROR: Found no tests. Use \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\` to suppress this error." ]
+}
+
+@test "BATS_ALLOW_EMPTY_SUITE does not fail when there are tests" {
+  bats_require_minimum_version 1.5.0
+  reentrant_run -0 env BATS_ALLOW_EMPTY_SUITE=1 bats "$FIXTURE_ROOT/passing.bats"
 }
 
 @test "empty testfile path is an error" {

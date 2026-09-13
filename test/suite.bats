@@ -9,7 +9,7 @@ setup() {
   reentrant_run --separate-stderr -1 bats "$FIXTURE_ROOT/empty"
   [ "$output" = "1..0" ]
   # shellcheck disable=SC2154
-  [ "$stderr" = "ERROR: Found no tests. (Try \`--allow-empty-suite\`?)" ]
+  [ "$stderr" = "ERROR: Found no tests. Use \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\` to suppress this error." ]
 }
 
 @test "running a suite with one test file" {
